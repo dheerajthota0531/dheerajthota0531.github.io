@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dheeraj Thota - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* New gradient background */
+            background: linear-gradient(to bottom right, #0f172a, #1a2033);
+            color: #e2e8f0;
+            overflow-x: hidden;
+            background-attachment: fixed; /* Ensures the gradient stays in place on scroll */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Enhanced gradient effect for navigation links */
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #8b5cf6, #ec4899);
+            transition: width .3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Enhanced hero title gradient */
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            background: linear-gradient(45deg, #60a5fa, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            background-size: 200% auto;
+            animation: text-gradient-animation 3s linear infinite;
+        }
+
+        @keyframes text-gradient-animation {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Slide-up animation for components on scroll */
+        .animated-text {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skill-card, .project-card, .experience-card {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out, box-shadow 0.3s ease-out;
+        }
+
+        .skill-card.visible, .project-card.visible, .experience-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Enhanced hover effect for cards */
+        .skill-card:hover, .project-card:hover, .experience-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #60a5fa;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background-color: #60a5fa;
+            border-radius: 50%;
+            border: 2px solid #0f172a;
+        }
+
+        @keyframes spin-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 4s linear infinite;
+        }
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-30px); }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 2.5s infinite;
+        }
+        @keyframes bounce-x {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(30px); }
+        }
+        .animate-bounce-x {
+          animation: bounce-x 5s infinite;
+        }
+        @keyframes bounce-y {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(30px); }
+        }
+        .animate-bounce-y {
+          animation: bounce-y 6s infinite;
+        }
+        .perspective { perspective: 1200px; }
+        .certificate-card .transform-style-preserve-3d { transform-style: preserve-3d; }
+        .certificate-card .backface-hidden { backface-visibility: hidden; }
+        .certificate-card .rotate-y-180 { transform: rotateY(180deg); }
+        .certificate-card .duration-700 { transition: transform 0.7s; }
+        @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(40px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+          animation: fade-in-up 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+        @keyframes fade-in-left {
+          0% { opacity: 0; transform: translateX(-40px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+        .animate-fade-in-left {
+          animation: fade-in-left 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+        @keyframes fade-in-right {
+          0% { opacity: 0; transform: translateX(40px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+        .animate-fade-in-right {
+          animation: fade-in-right 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+
+        /* Section-specific gradients */
+        #skills {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #38bdf8 100%);
+        }
+        #experience {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #6366f1 100%);
+        }
+        #projects {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #f59e42 100%);
+        }
+        #publications {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #ec4899 100%);
+        }
+        #certifications {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #10b981 100%);
+        }
+        #about {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #38bdf8 100%);
+        }
+
+        /* Larger certification cards */
+        .certificate-card {
+            width: 28rem !important; /* 448px */
+            height: 22rem !important; /* 352px */
+        }
+        .certificate-card img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200">
+    <!-- Header/Navigation -->
+    <header class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto p-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-sky-400">Dheeraj Thota</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#publications" class="nav-link">Publications</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen flex items-center justify-center text-center px-4 relative overflow-hidden">
+        <!-- Animated Tech Icons Background -->
+        <div id="tech-bg-animated" class="absolute inset-0 pointer-events-none z-0">
+            <img id="icon-react" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="w-32 h-32 opacity-10 absolute" style="left:10%;top:10%"/>
+            <img id="icon-docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" class="w-32 h-32 opacity-10 absolute" style="right:10%;top:24%"/>
+            <img id="icon-k8s" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" class="w-32 h-32 opacity-10 absolute" style="left:25%;bottom:10%"/>
+            <img id="icon-nginx" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx" class="w-32 h-32 opacity-10 absolute" style="right:25%;bottom:20%"/>
+            <img id="icon-node" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="w-32 h-32 opacity-10 absolute" style="left:50%;top:50%"/>
+            <img id="icon-mysql" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" class="w-32 h-32 opacity-10 absolute" style="left:33%;top:25%"/>
+            <img id="icon-mongo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="w-32 h-32 opacity-10 absolute" style="right:33%;top:33%"/>
+            <img id="icon-git" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="w-32 h-32 opacity-10 absolute" style="left:20%;bottom:25%"/>
+            <img id="icon-python" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="w-32 h-32 opacity-10 absolute" style="right:20%;bottom:33%"/>
+            <img id="icon-linux" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" class="w-32 h-32 opacity-10 absolute" style="left:50%;bottom:20%"/>
+            <img id="icon-bash" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" class="w-32 h-32 opacity-10 absolute" style="right:40%;top:60%"/>
+        </div>
+        <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-extrabold hero-title mb-4">DHEERAJ THOTA</h1>
+            <p id="typed-text" class="text-xl md:text-2xl font-light text-slate-400"></p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900">
+      <div class="container">
+        <h2 class="text-4xl font-bold text-center mb-12 text-sky-400">Technical Competencies</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Frontend -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Frontend Development</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>React.js</li>
+                  <li>TypeScript, JavaScript</li>
+                  <li>HTML5, CSS3, Responsive Design</li>
+              </ul>
+          </div>
+          <!-- DevOps -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-100">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">DevOps</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>Docker, Kubernetes, Ansible</li>
+                  <li>CI/CD (Jenkins, GitHub Actions)</li>
+                  <li>Nginx, Automation</li>
+              </ul>
+          </div>
+          <!-- Backend -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-200">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Backend Development</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>Node.js, Express.js</li>
+                  <li>RESTful APIs, Scalable Architectures</li>
+                  <li>Clean Code, TDD</li>
+              </ul>
+          </div>
+          <!-- Cloud & Deployment -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-300">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Cloud & Deployment</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>AWS, GCP, DigitalOcean</li>
+                  <li>High Availability, Scalability</li>
+                  <li>Security Best Practices</li>
+              </ul>
+          </div>
+          <!-- Databases -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-400">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Databases</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>MySQL, MariaDB, Redis, MongoDB</li>
+                  <li>Database Optimization</li>
+              </ul>
+          </div>
+           <!-- Scripting -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-500">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Scripting</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>Bash, Shell, Python</li>
+              </ul>
+          </div>
+          <!-- Version Control -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-600">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Version Control</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>Git, GitHub, GitLab</li>
+                  <li>Branching Strategies</li>
+              </ul>
+          </div>
+           <!-- Operating Systems -->
+          <div class="skill-card p-6 rounded-xl bg-slate-800 shadow-md transition-all duration-300 transform hover:scale-110 animate-fade-in-up delay-700">
+              <h3 class="text-2xl font-semibold mb-2 text-sky-400">Operating Systems</h3>
+              <ul class="list-disc list-inside space-y-1">
+                  <li>Linux (Ubuntu, CentOS)</li>
+                  <li>System Administration</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900">
+      <div class="container">
+        <h2 class="text-4xl font-bold text-center mb-12 text-sky-400">Experience</h2>
+        <div class="timeline">
+          <!-- Uzvi Services -->
+          <div class="timeline-item experience-card transition-all duration-300 animate-fade-in-left">
+              <div class="bg-slate-700 p-6 rounded-lg shadow-md">
+                  <h3 class="text-2xl font-bold text-white">Full-Stack Developer & DevOps Engineer</h3>
+                  <p class="text-sky-300">Uzvi Services <span class="text-slate-400 font-normal">- Aug 2024-Present</span></p>
+                  <ul class="list-disc list-outside ml-5 mt-2 space-y-2 text-slate-300">
+                      <li>Served as the solo full-stack developer and DevOps engineer for multiple high-impact projects.</li>
+                      <li>Led the migration of an e-commerce platform backend from PHP to Node.js with Express.js, resulting in 40% improved performance.</li>
+                      <li>Designed and deployed a secure web application for the Ministry of Energy, Andhra Pradesh (MOEAP).</li>
+                      <li>Orchestrated the full DevOps lifecycle using Docker, Kubernetes, Ansible, and CI/CD pipelines with GitHub Actions and Jenkins.</li>
+                      <li>Provisioned and optimized cloud infrastructure on AWS, GCP, and DigitalOcean, achieving 99.9% uptime.</li>
+                  </ul>
+              </div>
+          </div>
+          <!-- SpyPro Security Solutions -->
+          <div class="timeline-item experience-card transition-all duration-300 animate-fade-in-right delay-200">
+              <div class="bg-slate-700 p-6 rounded-lg shadow-md">
+                  <h3 class="text-2xl font-bold text-white">Machine Learning & Full-Stack Engineer (Intern)</h3>
+                  <p class="text-sky-300">SpyPro Security Solutions <span class="text-slate-400 font-normal">- Oct 2023 - May 2024</span></p>
+                  <ul class="list-disc list-outside ml-5 mt-2 space-y-2 text-slate-300">
+                      <li>Developed scalable machine learning models and full-stack applications, improving prediction accuracy by 20%.</li>
+                      <li>Independently architected and deployed a Retrieval-Augmented Generation (RAG) chatbot.</li>
+                      <li>Optimized data pipelines, reducing processing time by 30%.</li>
+                      <li>Collaborated cross-functionally to integrate ML solutions into full-stack systems.</li>
+                      <li>Documented codebases, APIs, and infrastructure with emphasis on readability and maintainability.</li>
+                  </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-400">Projects</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-slate-800 p-6 rounded-xl shadow-md transition-transform duration-300 transform hover:scale-105">
+                    <h3 class="text-2xl font-bold text-white">E-commerce Platform Migration</h3>
+                    <p class="text-sky-300 text-lg mb-2">Uzvi Services</p>
+                    <p class="text-slate-300 mb-4"><span class="font-semibold text-sky-400">Solo Developer:</span> Migrated the backend of an e-commerce platform from PHP to Node.js/Express.js and built a new React.js frontend. Implemented robust DevOps practices using Docker, Kubernetes, and CI/CD pipelines. All development and deployment was handled independently.</p>
+                    <a href="#" class="view-details text-sky-400 hover:text-sky-300 font-semibold" data-project="ecommerce">View Details &rarr;</a>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card bg-slate-800 p-6 rounded-xl shadow-md transition-transform duration-300 transform hover:scale-105">
+                    <h3 class="text-2xl font-bold text-white">MOEAP Employee Management System</h3>
+                    <p class="text-sky-300 text-lg mb-2">Uzvi Services</p>
+                    <p class="text-slate-300 mb-4"><span class="font-semibold text-sky-400">Solo Developer:</span> Designed and built a full-stack production application for the Ministry of Energy, Andhra Pradesh, using Node.js, React.js, and MySQL. Managed the project end-to-end as the only developer.</p>
+                    <a href="#" class="view-details text-sky-400 hover:text-sky-300 font-semibold" data-project="moeap">View Details &rarr;</a>
+                </div>
+                 <!-- Project 3 -->
+                <div class="project-card bg-slate-800 p-6 rounded-xl shadow-md transition-transform duration-300 transform hover:scale-105">
+                    <h3 class="text-2xl font-bold text-white">RAG Chatbot</h3>
+                    <p class="text-sky-300 text-lg mb-2">SpyPro Security Solutions</p>
+                    <p class="text-slate-300 mb-4"><span class="font-semibold text-sky-400">Solo Developer:</span> Independently architected and deployed a Retrieval-Augmented Generation (RAG) chatbot using LLMs, APIs, scikit-learn, and NLP techniques. Deployed on AWS with CI/CD and Kubernetes.</p>
+                    <a href="#" class="view-details text-sky-400 hover:text-sky-300 font-semibold" data-project="rag-chatbot">View Details &rarr;</a>
+                </div>
+                <!-- New Project: SAP POC Application -->
+                <div class="project-card bg-slate-800 p-6 rounded-xl shadow-md transition-transform duration-300 transform hover:scale-105">
+                    <h3 class="text-2xl font-bold text-white">SAP POC Application</h3>
+                    <p class="text-sky-300 text-lg mb-2">Uzvi Services</p>
+                    <p class="text-slate-300 mb-4"><span class="font-semibold text-sky-400">Solo Developer:</span> Developed a proof-of-concept application to demonstrate seamless integration with SAP systems, focusing on data synchronization and a user-friendly frontend. This project highlights enterprise-level development skills and was completed independently.</p>
+                    <a href="#" class="view-details text-sky-400 hover:text-sky-300 font-semibold" data-project="sap-poc">View Details &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900">
+      <div class="container">
+        <h2 class="text-5xl font-bold text-center mb-16 text-emerald-400">Certifications</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 justify-center">
+          <!-- Docker Certificate Card -->
+          <div class="certificate-card group perspective mx-auto w-96 h-72 cursor-pointer">
+            <div class="relative w-full h-full duration-700 transform-style-preserve-3d group-hover:rotate-y-180" onclick="this.classList.toggle('rotate-y-180')">
+              <!-- Front -->
+              <div class="absolute w-full h-full flex flex-col items-center justify-center bg-slate-800 rounded-2xl shadow-2xl backface-hidden border-4 border-emerald-400">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker Logo" class="w-20 h-20 mb-4 animate-bounce-slow"/>
+                <h3 class="text-2xl font-bold text-white mb-2 text-center">Crash Course: Docker For Absolute Beginners</h3>
+                <p class="text-sky-300 text-base mb-1">KodeKloud</p>
+                <p class="text-slate-400 text-sm">Issued Jul 2025</p>
+                <p class="text-slate-400 text-sm">Credential ID: 3d3aa8f2-568a-48d7-a217-396658ee5293</p>
+              </div>
+              <!-- Back -->
+              <div class="absolute w-full h-full flex items-center justify-center bg-slate-900 rounded-2xl shadow-2xl rotate-y-180 backface-hidden border-4 border-emerald-400">
+                <img src="Docker Absolute Beginner Certificate_page-0001.jpg" alt="Docker Certificate" class="w-full h-full object-contain rounded-2xl"/>
+              </div>
+            </div>
+          </div>
+          <!-- Shell Scripts Certificate Card -->
+          <div class="certificate-card group perspective mx-auto w-96 h-72 cursor-pointer">
+            <div class="relative w-full h-full duration-700 transform-style-preserve-3d group-hover:rotate-y-180" onclick="this.classList.toggle('rotate-y-180')">
+              <!-- Front -->
+              <div class="absolute w-full h-full flex flex-col items-center justify-center bg-slate-800 rounded-2xl shadow-2xl backface-hidden border-4 border-emerald-400">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash Logo" class="w-20 h-20 mb-4 animate-bounce-slow"/>
+                <h3 class="text-2xl font-bold text-white mb-2 text-center">Shell Scripts for Beginners</h3>
+                <p class="text-sky-300 text-base mb-1">KodeKloud</p>
+                <p class="text-slate-400 text-sm">Issued Jul 2025</p>
+                <p class="text-slate-400 text-sm">Credential ID: 1db60ab3-ce8a-4aff-8b31-becdf8c24039</p>
+              </div>
+              <!-- Back -->
+              <div class="absolute w-full h-full flex items-center justify-center bg-slate-900 rounded-2xl shadow-2xl rotate-y-180 backface-hidden border-4 border-emerald-400">
+                <img src="Shell Scripts Certificate_page-0001.jpg" alt="Shell Scripts Certificate" class="w-full h-full object-contain rounded-2xl"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900">
+      <div class="container">
+        <h2 class="text-4xl font-bold text-center mb-12 text-pink-400">Publications</h2>
+        <div class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+          <div class="bg-slate-800 border-2 border-pink-400 p-6 rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300">
+            <h3 class="text-xl font-bold text-white mb-2">A Comprehensive Review of Deepfake Detection Pertaining to Images, Videos, Audio, and News using Deep Learning Techniques</h3>
+            <p class="text-pink-300 mb-1">Engineering and Technology Journal, Apr 2025</p>
+            <ul class="list-disc list-inside text-slate-300 mb-2 text-sm">
+              <li>Co-authored a review paper analyzing state-of-the-art deep learning techniques for deepfake detection across images, videos, audio, and news.</li>
+              <li>Published in Engineering and Technology Journal, Volume 10, Issue 04, Pages 4535–4543, DOI: <a href="https://doi.org/10.47191/etj/v10i04.20" class="text-pink-400 underline" target="_blank">10.47191/etj/v10i04.20</a>, Impact Factor: 8.482.</li>
+              <li>Discussed the application of CNNs, LSTMs, RNNs, BERT, Vision Transformers (ViTs), and Explainable AI (XAI) in detecting manipulated content.</li>
+              <li>Highlighted emerging research challenges and future directions for robust and interpretable deepfake detection.</li>
+            </ul>
+          </div>
+          <div class="bg-slate-800 border-2 border-pink-400 p-6 rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300">
+            <h3 class="text-xl font-bold text-white mb-2">A Conversational Chat Interface with Specific Trained Data</h3>
+            <p class="text-pink-300 mb-1">IJRAR Journal, Jun 2024</p>
+            <ul class="list-disc list-inside text-slate-300 mb-2 text-sm">
+              <li>Authored a paper on building a Retrieval-Augmented Generation (RAG) chatbot, detailing the design, implementation, and evaluation of the chatbot.</li>
+              <li>Highlighted innovative techniques used to enhance customer interaction and engagement.</li>
+              <li>Demonstrated significant improvements in chatbot performance and user satisfaction through detailed case studies and experimental results.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-800">
+        <div class="container">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-400">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+               <div class="space-y-4">
+                <p class="text-lg">
+                    I am a results-driven <strong>Full-Stack Developer</strong> and <strong>DevOps Engineer</strong> with 2 years of hands-on experience in designing, developing,
+                    deploying, and maintaining scalable, maintainable, and readable code for production-grade applications.
+                </p>
+                <p class="text-lg">
+                    I am passionate about optimizing workflows, automating deployments, and delivering secure, efficient systems that bridge development and operations seamlessly. 
+                    My expertise spans across <strong>React.js, Node.js, Express.js</strong>, and databases like <strong>MySQL, MongoDB</strong>, as well as 
+                    <strong>DevOps</strong> practices including <strong>Docker, Kubernetes</strong>, and <strong>CI/CD pipelines</strong>.
+                </p>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-semibold text-sky-400 mb-2">Get in Touch</h3>
+                    <p class="text-lg mb-4">I'm currently open to new opportunities. Feel free to reach out!</p>
+                    <div class="flex flex-col md:flex-row justify-start items-start md:items-center space-y-4 md:space-y-0 md:space-x-8">
+                        <a href="mailto:dheeraj.thota.0531@gmail.com" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">Email Me</a>
+                        <a href="https://linkedin.com/in/thotadheeraj/" target="_blank" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">LinkedIn</a>
+                        <a href="https://github.com/dheerajthota0531/" target="_blank" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="LinkedInDP.jpeg" alt="Profile Image" class="w-2/3 md:w-2/3 h-auto rounded-lg shadow-lg mx-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-center py-6 text-slate-500">
+        <p>&copy; 2025 Thota Dheeraj. All rights reserved.</p>
+    </footer>
+
+    <!-- Project Details Modal -->
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-800 p-8 rounded-xl shadow-2xl max-w-2xl w-full relative"></div>
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 transition-colors duration-200 text-3xl">&times;</button>
+            <h3 id="modal-title" class="text-3xl font-bold text-sky-400 mb-4">Project Title</h3>
+            <div id="modal-content" class="text-slate-300 space-y-4">
+                <!-- Project details will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hero Section Typed Text Animation
+        const typedTextSpan = document.getElementById('typed-text');
+        const textArray = ["Full-Stack Developer", "DevOps Engineer", "Problem Solver"];
+        const typingDelay = 100;
+        const erasingDelay = 50;
+        const newTextDelay = 1500;
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                if(!typedTextSpan.classList.contains("typing")) typedTextSpan.classList.add("typing");
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else {
+                typedTextSpan.classList.remove("typing");
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                if(!typedTextSpan.classList.contains("typing")) typedTextSpan.classList.add("typing");
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } else {
+                typedTextSpan.classList.remove("typing");
+                textArrayIndex++;
+                if(textArrayIndex>=textArray.length) textArrayIndex=0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.skill-card, .project-card, .experience-card').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Project Modal functionality
+        const projectData = {
+            'ecommerce': {
+                title: 'E-commerce Platform Migration and Redevelopment',
+                description: `
+                    <p><strong>Role:</strong> Full-Stack Developer & DevOps Engineer</p>
+                    <p>Migrated the backend of an e-commerce platform from PHP to Node.js/Express.js and built a new, responsive frontend from scratch using React.js. Optimized the database with MySQL for enhanced scalability and performance, resulting in a 40% performance improvement.</p>
+                    <p>I also implemented a complete DevOps lifecycle for the project, including Docker for containerization, Kubernetes for orchestration, and CI/CD pipelines with GitHub Actions and Jenkins for automated deployments. This ensured robust security, maintainability, and 35% faster load times.</p>
+                `
+            },
+            'moeap': {
+                title: 'Ministry of Energy Andhra Pradesh (MOEAP) Employee Management System',
+                description: `
+                    <p><strong>Role:</strong> Full-Stack Developer</p>
+                    <p>Designed, developed, and deployed a secure, full-stack production-grade web application for the Ministry of Energy, Andhra Pradesh. The system, built with Node.js, React.js, and MySQL, enables efficient management of employee requests, bills, and grievances with role-based access control (RBAC).</p>
+                    <p>The application was deployed on AWS with managed MySQL services, automated backups, and high availability configurations using Kubernetes and Nginx, ensuring 99.9% uptime and reliable performance.</p>
+                `
+            },
+            'rag-chatbot': {
+                title: 'Retrieval-Augmented Generation (RAG) Chatbot',
+                description: `
+                    <p><strong>Role:</strong> Machine Learning & Full-Stack Engineer (Intern)</p>
+                    <p>Independently architected and deployed a Retrieval-Augmented Generation (RAG) chatbot using LLMs, APIs, scikit-learn, and NLP techniques. This project improved the chatbot's accuracy by 30% and user engagement by 25% by fine-tuning the model and optimizing data pipelines.</p>
+                    <p>The chatbot was deployed on AWS with CI/CD and Kubernetes, showcasing a scalable and maintainable architecture. I also focused on applying agile practices and clean code principles to ensure a robust and efficient deployment.</p>
+                `
+            },
+            // New project data
+            'sap-poc': {
+                title: 'SAP POC Application',
+                description: `
+                    <p><strong>Role:</strong> Full-Stack Developer</p>
+                    <p>Developed a proof-of-concept (POC) application to showcase a seamless integration with SAP systems, focusing on data synchronization and a user-friendly frontend. This project highlights enterprise-level development skills.</p>
+                `
+            }
+        };
+
+        const modal = document.getElementById('project-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const viewDetailsLinks = document.querySelectorAll('.view-details');
+
+        function openModal(projectId) {
+            const project = projectData[projectId];
+            if (project) {
+                modalTitle.textContent = project.title;
+                modalContent.innerHTML = project.description;
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        viewDetailsLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectId = link.getAttribute('data-project');
+                openModal(projectId);
+            });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target.id === 'project-modal') {
+                closeModal();
+            }
+        });
+
+        // Algorithmic motion for tech icons background
+        const icons = [
+          { id: 'icon-react',    fx: (t) => [10 + 5*Math.sin(t/1.5), 10 + 5*Math.cos(t/2)] },
+          { id: 'icon-docker',   fx: (t) => [80 + 7*Math.cos(t/2.2), 24 + 5*Math.sin(t/1.7)] },
+          { id: 'icon-k8s',      fx: (t) => [25 + 8*Math.sin(t/2.5), 80 + 6*Math.cos(t/2.1)] },
+          { id: 'icon-nginx',    fx: (t) => [75 + 6*Math.cos(t/2.3), 80 + 7*Math.sin(t/2.4)] },
+          { id: 'icon-node',     fx: (t) => [50 + 10*Math.sin(t/2), 50 + 10*Math.cos(t/2)] },
+          { id: 'icon-mysql',    fx: (t) => [33 + 7*Math.sin(t/2.7), 25 + 5*Math.cos(t/2.2)] },
+          { id: 'icon-mongo',    fx: (t) => [67 + 8*Math.cos(t/2.8), 33 + 6*Math.sin(t/2.3)] },
+          { id: 'icon-git',      fx: (t) => [20 + 6*Math.sin(t/2.9), 75 + 5*Math.cos(t/2.5)] },
+          { id: 'icon-python',   fx: (t) => [80 + 7*Math.cos(t/2.6), 67 + 6*Math.sin(t/2.7)] },
+          { id: 'icon-linux',    fx: (t) => [50 + 8*Math.sin(t/2.4), 80 + 7*Math.cos(t/2.8)] },
+          { id: 'icon-bash',     fx: (t) => [40 + 8*Math.sin(t/2.1), 60 + 7*Math.cos(t/2.2)] },
+        ];
+        function animateIcons() {
+          const t = Date.now() / 1000;
+          icons.forEach(({id, fx}) => {
+            const el = document.getElementById(id);
+            if (el) {
+              const [x, y] = fx(t);
+              el.style.left = x + '%';
+              el.style.top = y + '%';
+              el.style.right = '';
+              el.style.bottom = '';
+              el.style.transform = 'translate(-50%, -50%)';
+            }
+          });
+          requestAnimationFrame(animateIcons);
+        }
+        document.addEventListener('DOMContentLoaded', animateIcons);
+    </script>
+</body>
+</html>
